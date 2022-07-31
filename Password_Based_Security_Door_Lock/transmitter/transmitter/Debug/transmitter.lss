@@ -1,0 +1,300 @@
+
+transmitter.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  000001ee  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000019a  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  000001ee  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000220  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000038  00000000  00000000  0000025c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   0000082e  00000000  00000000  00000294  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000006f1  00000000  00000000  00000ac2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000362  00000000  00000000  000011b3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000064  00000000  00000000  00001518  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003d5  00000000  00000000  0000157c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000168  00000000  00000000  00001951  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000028  00000000  00000000  00001ab9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 38 00 	jmp	0x70	; 0x70 <__ctors_end>
+   4:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+   8:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+   c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  10:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  14:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  18:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  1c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  20:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  24:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  28:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  2c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  30:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  34:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  38:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  3c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  40:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  44:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  48:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  4c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  50:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  54:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  58:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  5c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  60:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  64:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  68:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  6c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+
+00000070 <__ctors_end>:
+  70:	11 24       	eor	r1, r1
+  72:	1f be       	out	0x3f, r1	; 63
+  74:	cf ef       	ldi	r28, 0xFF	; 255
+  76:	d4 e0       	ldi	r29, 0x04	; 4
+  78:	de bf       	out	0x3e, r29	; 62
+  7a:	cd bf       	out	0x3d, r28	; 61
+  7c:	0e 94 6c 00 	call	0xd8	; 0xd8 <main>
+  80:	0c 94 cb 00 	jmp	0x196	; 0x196 <_exit>
+
+00000084 <__bad_interrupt>:
+  84:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000088 <GetKeyPressed>:
+}
+
+int GetKeyPressed(void)
+{
+	char x;
+	PORTB=0x00;
+  88:	18 ba       	out	0x18, r1	; 24
+	int data;
+	x = PINC;
+  8a:	83 b3       	in	r24, 0x13	; 19
+	if (x==0x01)
+  8c:	81 30       	cpi	r24, 0x01	; 1
+  8e:	29 f4       	brne	.+10     	; 0x9a <GetKeyPressed+0x12>
+	{
+		data = ((PIND>>4)&0x0F);
+  90:	80 b3       	in	r24, 0x10	; 16
+  92:	82 95       	swap	r24
+  94:	8f 70       	andi	r24, 0x0F	; 15
+  96:	90 e0       	ldi	r25, 0x00	; 0
+		return data;
+  98:	08 95       	ret
+	}
+	return 16;
+  9a:	80 e1       	ldi	r24, 0x10	; 16
+  9c:	90 e0       	ldi	r25, 0x00	; 0
+}
+  9e:	08 95       	ret
+
+000000a0 <TransmitPassword>:
+
+void TransmitPassword(char password)
+{
+	//transmitter declarations
+	//transmission code
+	while(!(UCSR0A&(1<<UDRE0)));
+  a0:	5d 9b       	sbis	0x0b, 5	; 11
+  a2:	fe cf       	rjmp	.-4      	; 0xa0 <TransmitPassword>
+	UDR0 = password;
+  a4:	8c b9       	out	0x0c, r24	; 12
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  a6:	2f e3       	ldi	r18, 0x3F	; 63
+  a8:	8d e0       	ldi	r24, 0x0D	; 13
+  aa:	93 e0       	ldi	r25, 0x03	; 3
+  ac:	21 50       	subi	r18, 0x01	; 1
+  ae:	80 40       	sbci	r24, 0x00	; 0
+  b0:	90 40       	sbci	r25, 0x00	; 0
+  b2:	e1 f7       	brne	.-8      	; 0xac <TransmitPassword+0xc>
+  b4:	00 c0       	rjmp	.+0      	; 0xb6 <TransmitPassword+0x16>
+  b6:	00 00       	nop
+  b8:	08 95       	ret
+
+000000ba <ReceiveStatus>:
+int ReceiveStatus(void){
+	//receiver declarations
+	//DDRD&=~(1<<PD0);
+	//DDRD|=1<<PD1;
+	//UCSR0B = (1<<RXEN0);
+	PORTC=0;
+  ba:	15 ba       	out	0x15, r1	; 21
+	int receiveData=0;
+	while (!(UCSR0A&(1<<RXC0)));
+  bc:	5f 9b       	sbis	0x0b, 7	; 11
+  be:	fe cf       	rjmp	.-4      	; 0xbc <ReceiveStatus+0x2>
+	receiveData=UDR0;
+  c0:	8c b1       	in	r24, 0x0c	; 12
+  c2:	90 e0       	ldi	r25, 0x00	; 0
+  c4:	2f e3       	ldi	r18, 0x3F	; 63
+  c6:	3d e0       	ldi	r19, 0x0D	; 13
+  c8:	43 e0       	ldi	r20, 0x03	; 3
+  ca:	21 50       	subi	r18, 0x01	; 1
+  cc:	30 40       	sbci	r19, 0x00	; 0
+  ce:	40 40       	sbci	r20, 0x00	; 0
+  d0:	e1 f7       	brne	.-8      	; 0xca <ReceiveStatus+0x10>
+  d2:	00 c0       	rjmp	.+0      	; 0xd4 <ReceiveStatus+0x1a>
+  d4:	00 00       	nop
+	_delay_ms(1000);
+	return receiveData;
+  d6:	08 95       	ret
+
+000000d8 <main>:
+int GetKeyPressed(void);
+void TransmitPassword(char password);
+int ReceiveStatus(void);
+
+int main(void)
+{
+  d8:	cf 93       	push	r28
+  da:	df 93       	push	r29
+  dc:	cd b7       	in	r28, 0x3d	; 61
+  de:	de b7       	in	r29, 0x3e	; 62
+  e0:	64 97       	sbiw	r28, 0x14	; 20
+  e2:	0f b6       	in	r0, 0x3f	; 63
+  e4:	f8 94       	cli
+  e6:	de bf       	out	0x3e, r29	; 62
+  e8:	0f be       	out	0x3f, r0	; 63
+  ea:	cd bf       	out	0x3d, r28	; 61
+	//keypad declarations
+	char digit[20]={'1','2','3','A','4','5','6','B','7','8','9','C','*','0','#','\0'};
+  ec:	fe 01       	movw	r30, r28
+  ee:	31 96       	adiw	r30, 0x01	; 1
+  f0:	84 e1       	ldi	r24, 0x14	; 20
+  f2:	df 01       	movw	r26, r30
+  f4:	1d 92       	st	X+, r1
+  f6:	8a 95       	dec	r24
+  f8:	e9 f7       	brne	.-6      	; 0xf4 <main+0x1c>
+  fa:	81 e3       	ldi	r24, 0x31	; 49
+  fc:	89 83       	std	Y+1, r24	; 0x01
+  fe:	82 e3       	ldi	r24, 0x32	; 50
+ 100:	8a 83       	std	Y+2, r24	; 0x02
+ 102:	83 e3       	ldi	r24, 0x33	; 51
+ 104:	8b 83       	std	Y+3, r24	; 0x03
+ 106:	81 e4       	ldi	r24, 0x41	; 65
+ 108:	8c 83       	std	Y+4, r24	; 0x04
+ 10a:	84 e3       	ldi	r24, 0x34	; 52
+ 10c:	8d 83       	std	Y+5, r24	; 0x05
+ 10e:	85 e3       	ldi	r24, 0x35	; 53
+ 110:	8e 83       	std	Y+6, r24	; 0x06
+ 112:	86 e3       	ldi	r24, 0x36	; 54
+ 114:	8f 83       	std	Y+7, r24	; 0x07
+ 116:	82 e4       	ldi	r24, 0x42	; 66
+ 118:	88 87       	std	Y+8, r24	; 0x08
+ 11a:	87 e3       	ldi	r24, 0x37	; 55
+ 11c:	89 87       	std	Y+9, r24	; 0x09
+ 11e:	88 e3       	ldi	r24, 0x38	; 56
+ 120:	8a 87       	std	Y+10, r24	; 0x0a
+ 122:	89 e3       	ldi	r24, 0x39	; 57
+ 124:	8b 87       	std	Y+11, r24	; 0x0b
+ 126:	83 e4       	ldi	r24, 0x43	; 67
+ 128:	8c 87       	std	Y+12, r24	; 0x0c
+ 12a:	8a e2       	ldi	r24, 0x2A	; 42
+ 12c:	8d 87       	std	Y+13, r24	; 0x0d
+ 12e:	80 e3       	ldi	r24, 0x30	; 48
+ 130:	8e 87       	std	Y+14, r24	; 0x0e
+ 132:	83 e2       	ldi	r24, 0x23	; 35
+ 134:	8f 87       	std	Y+15, r24	; 0x0f
+	DDRD = 0x0F;
+ 136:	8f e0       	ldi	r24, 0x0F	; 15
+ 138:	81 bb       	out	0x11, r24	; 17
+	DDRC = 0x00;
+ 13a:	14 ba       	out	0x14, r1	; 20
+	DDRB = (1<<PINB1);
+ 13c:	82 e0       	ldi	r24, 0x02	; 2
+ 13e:	87 bb       	out	0x17, r24	; 23
+	int key;
+	char password = digit[16];
+ 140:	19 89       	ldd	r17, Y+17	; 0x11
+	
+	//receiving and transmission declarations
+	UBRR0H = 0X00;
+ 142:	10 bc       	out	0x20, r1	; 32
+	UBRR0L = 0X05;
+ 144:	85 e0       	ldi	r24, 0x05	; 5
+ 146:	89 b9       	out	0x09, r24	; 9
+	UCSR0C = (1<<URSEL0)|(1<<USBS0)|(3<<UCSZ00);
+ 148:	8e e8       	ldi	r24, 0x8E	; 142
+ 14a:	80 bd       	out	0x20, r24	; 32
+	DDRD|=1<<PD1;
+ 14c:	81 b3       	in	r24, 0x11	; 17
+ 14e:	82 60       	ori	r24, 0x02	; 2
+ 150:	81 bb       	out	0x11, r24	; 17
+	DDRD&=~(1<<PD0);
+ 152:	81 b3       	in	r24, 0x11	; 17
+ 154:	8e 7f       	andi	r24, 0xFE	; 254
+ 156:	81 bb       	out	0x11, r24	; 17
+	PORTD|=1<<PD0;
+ 158:	82 b3       	in	r24, 0x12	; 18
+ 15a:	81 60       	ori	r24, 0x01	; 1
+ 15c:	82 bb       	out	0x12, r24	; 18
+	//int UBBRValue=25;
+	UCSR0B = (1<<TXEN0)|(1<<RXEN0);
+ 15e:	88 e1       	ldi	r24, 0x18	; 24
+ 160:	8a b9       	out	0x0a, r24	; 10
+
+	
+	//main declarations
+	int receiveData;
+	DDRA=0xFF;
+ 162:	8f ef       	ldi	r24, 0xFF	; 255
+ 164:	8a bb       	out	0x1a, r24	; 26
+	PORTA=0b11000110;
+ 166:	86 ec       	ldi	r24, 0xC6	; 198
+ 168:	8b bb       	out	0x1b, r24	; 27
+	
+	TransmitPassword(password);
+ 16a:	81 2f       	mov	r24, r17
+ 16c:	0e 94 50 00 	call	0xa0	; 0xa0 <TransmitPassword>
+	/* Replace with your application code */
+	while (1)
+	{
+		receiveData = ReceiveStatus();
+ 170:	0e 94 5d 00 	call	0xba	; 0xba <ReceiveStatus>
+		PORTA=receiveData;
+ 174:	8b bb       	out	0x1b, r24	; 27
+		key = GetKeyPressed();
+ 176:	0e 94 44 00 	call	0x88	; 0x88 <GetKeyPressed>
+		if (key!=16){
+ 17a:	80 31       	cpi	r24, 0x10	; 16
+ 17c:	91 05       	cpc	r25, r1
+ 17e:	39 f0       	breq	.+14     	; 0x18e <main+0xb6>
+			password = digit[key];
+ 180:	e1 e0       	ldi	r30, 0x01	; 1
+ 182:	f0 e0       	ldi	r31, 0x00	; 0
+ 184:	ec 0f       	add	r30, r28
+ 186:	fd 1f       	adc	r31, r29
+ 188:	e8 0f       	add	r30, r24
+ 18a:	f9 1f       	adc	r31, r25
+ 18c:	10 81       	ld	r17, Z
+		}
+		TransmitPassword(password);
+ 18e:	81 2f       	mov	r24, r17
+ 190:	0e 94 50 00 	call	0xa0	; 0xa0 <TransmitPassword>
+	}
+ 194:	ed cf       	rjmp	.-38     	; 0x170 <main+0x98>
+
+00000196 <_exit>:
+ 196:	f8 94       	cli
+
+00000198 <__stop_program>:
+ 198:	ff cf       	rjmp	.-2      	; 0x198 <__stop_program>

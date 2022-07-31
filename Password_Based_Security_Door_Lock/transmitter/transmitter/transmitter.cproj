@@ -12,9 +12,9 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>RECEIVERCODE</AssemblyName>
-    <Name>RECEIVERCODE</Name>
-    <RootNamespace>RECEIVERCODE</RootNamespace>
+    <AssemblyName>transmitter</AssemblyName>
+    <Name>transmitter</Name>
+    <RootNamespace>transmitter</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
