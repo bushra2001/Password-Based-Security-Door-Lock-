@@ -2,7 +2,7 @@
  * receiver.c
  *
  * Created: 7/29/2022 11:27:43 PM
- * Author : Dell
+ * Author : Bushra
  */ 
 
 #include <avr/io.h>
