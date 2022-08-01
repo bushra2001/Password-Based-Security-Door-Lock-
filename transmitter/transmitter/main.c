@@ -2,7 +2,7 @@
  * transmitter.c
  *
  * Created: 7/29/2022 11:25:27 PM
- * Author : Dell
+ * Author : Bushra
  */ 
 
 
